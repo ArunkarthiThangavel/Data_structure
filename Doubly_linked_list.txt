@@ -1,0 +1,290 @@
+#include<stdio.h>
+#include<stdlib.h>
+void createlist(int n);
+void insert_first(void);
+void insert_middle(void);
+void insert_last();
+void delete_first(void);
+void delete_middle(void);
+void delete_last();
+void display(void);
+void newnode(void);
+struct node{
+    int data;
+    struct node* prev;
+    struct node* next; 
+}*temp,*head,*trav,*tail,*trac;
+int main(){
+    int press;
+    int n,i;
+    printf("Enter the number to create list:");
+    scanf("%d",&n);
+    createlist(n);
+    do{
+    printf("\n1.insert first\n2.insert middle\n3.insert last");
+    printf("\n4.delete first\n5.delete middle\n6.delete last");
+    int option;
+    printf("\nEnter the option:");
+    scanf("%d",&option);
+    switch(option)
+    {
+        case 1:
+            insert_first();
+            break;
+        case 2:
+            insert_middle();
+            break;
+        
+        case 3:
+            insert_last();
+            break;
+        case 4:
+            delete_first();
+            break;
+        case 5:
+            delete_middle();
+            break;
+        case 6:
+            delete_last();
+            break;
+        default:
+            printf("Enter the valid number;");
+            break;
+            
+    }
+    display();
+    printf("\n\nIf you want to continue please Enter '1':");
+    scanf("%d",&press);
+    }while(press==1);
+}
+void createlist(int n)
+{
+    int num;
+    for(int i=0;i<n;i++)
+    {
+        temp=(struct node *)malloc(sizeof(struct node));
+        printf("Enter the node number:");
+        scanf("%d",&temp->data);
+        temp->prev=NULL;
+        temp->next=NULL;
+        if(temp==NULL)
+        {
+            printf("list is empty");
+        }
+        else{
+            if(head==NULL){
+                head=temp;
+                tail=temp;
+            }
+            else{
+                tail->next=temp;
+                temp->prev=tail;
+                tail=temp;
+            }
+        }
+    }
+}
+void newnode(){
+    int num;
+        temp=(struct node *)malloc(sizeof(struct node));
+        printf("enter the number:");
+        scanf("%d",&temp->data);
+        
+        temp->next=NULL;
+}
+void insert_first(){
+    int n;
+    printf("Enter number to insert how many node;");
+    scanf("%d",&n);
+    for(int i=0;i<n;i++){
+    newnode();
+    if(head==NULL)
+    printf("List is empty");
+    else{
+         temp->next=head;
+         head->prev=temp;
+        head=temp;
+        }
+    }
+}
+void insert_last(){
+    int n;
+    printf("Enter number to insert how many node;");
+    scanf("%d",&n);
+    for(int i=0;i<n;i++){
+     newnode();
+    if(head==NULL)
+    printf("List is empty");
+    else{
+        trav=head;
+        while(trav->next!=NULL)
+        {
+            trav=trav->next;
+        }
+       trav->next=temp;
+       temp->prev=trav;
+    }
+    }    
+}
+void insert_middle(){
+    newnode();
+    int data;
+    printf("Enter the data in the node to insert after:");
+    scanf("%d",&data);
+    if(head==NULL)
+    printf("List is empty");
+    else{
+        trav=head;
+        while(trav->data!=data)
+        {
+         trav=trav->next;   
+        }
+        temp->next=trav->next;
+        temp->prev=trav;
+        trav->next->prev=temp;
+        trav->next=temp;
+        
+    }
+    
+}
+void delete_first(){
+    if(head==NULL)
+    printf("list is empty");
+    else{
+        temp=head;
+        head=temp->next;
+        head->prev=NULL;
+        free(temp);
+    }
+}
+void delete_middle(){
+    int data;
+    printf("Enter the data to delete:");
+    scanf("%d\n",&data);
+    if(head==NULL)
+    printf("list is empty");
+    
+    else{
+        temp=head;
+        while(temp->data!=data)
+        {
+            trav=temp;
+            temp=temp->next;
+        }
+        trav->next=temp->next;
+        temp->next->prev=trav;
+        free(temp);
+    }
+}
+void delete_last(){
+     if(head==NULL)
+    printf("list is empty");
+    else{
+        temp=head;
+        while(temp->next!=NULL)
+        {
+            trav=temp;
+            temp=temp->next;
+        }
+        trav=temp->prev;
+        trav->next=NULL;
+        free(temp);    
+        
+    }
+}
+
+void display()
+{
+    printf("\nThe list is\n");
+    if(head==NULL)
+    printf("List is empty");
+    else{
+        temp=head;
+        while(temp!=NULL)
+        {
+            printf("-->%d",temp->data);
+            temp=temp->next;
+        }
+    }
+}
+
+
+OUTPUT:
+
+Enter the number to create list:4
+Enter the node number:1
+Enter the node number:2
+Enter the node number:3
+Enter the node number:4
+
+1.insert first
+2.insert middle
+3.insert last
+4.delete first
+5.delete middle
+6.delete last
+Enter the option:1
+Enter number to insert how many node;1
+enter the number:10
+
+The list is
+-->10-->1-->2-->3-->4
+
+If you want to continue please Enter '1':1
+
+1.insert first
+2.insert middle
+3.insert last
+4.delete first
+5.delete middle
+6.delete last
+Enter the option:2
+enter the number:20
+Enter the data in the node to insert after:2
+
+The list is
+-->10-->1-->2-->20-->3-->4
+
+If you want to continue please Enter '1':1
+
+1.insert first
+2.insert middle
+3.insert last
+4.delete first
+5.delete middle
+6.delete last
+Enter the option:3
+Enter number to insert how many node;1
+enter the number:40
+
+The list is
+-->10-->1-->2-->20-->3-->4-->40
+
+
+If you want to continue please Enter '1':1
+
+1.insert first
+2.insert middle
+3.insert last
+4.delete first
+5.delete middle
+6.delete last
+Enter the option:4
+
+The list is
+-->1-->2-->20-->3-->4-->40
+
+If you want to continue please Enter '1':1
+
+1.insert first
+2.insert middle
+3.insert last
+4.delete first
+5.delete middle
+6.delete last
+Enter the option:6
+
+The list is
+-->1-->2-->20-->3-->4
+
+If you want to continue please Enter '1':
